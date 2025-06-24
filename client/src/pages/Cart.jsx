@@ -18,8 +18,10 @@ export const Cart = () => {
         let tempArray = []
         for (const key in cartItems) {
             const products = product.find((item) => item._id === key)
-            products.quantity = cartItems[key]
-            tempArray.push(products)
+            if (products) {
+                products.quantity = cartItems[key]
+                tempArray.push(products)
+            }
         }
         setCartArray(tempArray)
     }

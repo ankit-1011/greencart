@@ -14,33 +14,33 @@ export const ProductDetails = () => {
     const [relatedProducts, setRelatedProducts] = useState([])
     const [thumbnail, setThumbnail] = useState(null);
 
-    const products = product.find((item) => item._id === id);
+    const currentProduct = product.find((item) => item._id === id);
 
     useEffect(() => {
-        if (products.length > 0) {
-            let productsCopy = products.slice();
-            productsCopy = productsCopy.filter((item) => products.category === item.category)
+        if (currentProduct && product.length > 0) {
+            let productsCopy = product.slice();
+            productsCopy = productsCopy.filter((item) => currentProduct.category === item.category && item._id !== currentProduct._id)
             setRelatedProducts(productsCopy.slice(0, 5))
         }
-    }, [products])
+    }, [currentProduct, product])
 
     useEffect(() => {
-        setThumbnail(products?.image[0] ? products.image[0] : null)
-    })
+        setThumbnail(currentProduct?.image[0] ? currentProduct.image[0] : null)
+    }, [currentProduct])
 
-    return product && (
+    return currentProduct && (
         <div className="mt-12">
             <p>
                 <Link to={'/'}>Home</Link> /
                 <Link to={'/products'}> Products</Link> /
-                <Link to={`/products/${products.category.toLowerCase()}`}> {products.category}</Link> /
-                <span className="text-indigo-500"> {products.name}</span>
+                <Link to={`/products/${currentProduct.category.toLowerCase()}`}> {currentProduct.category}</Link> /
+                <span className="text-indigo-500"> {currentProduct.name}</span>
             </p>
 
             <div className="flex flex-col md:flex-row gap-16 mt-4">
                 <div className="flex gap-3">
                     <div className="flex flex-col gap-3">
-                        {products.image.map((image, index) => (
+                        {currentProduct.image.map((image, index) => (
                             <div key={index} onClick={() => { setThumbnail(image) }}
                                 className="border max-w-24 border-gray-500/30 rounded overflow-hidden cursor-pointer" >
                                 <img src={image} alt={`Thumbnail ${index + 1}`} />
@@ -54,7 +54,7 @@ export const ProductDetails = () => {
                 </div>
 
                 <div className="text-sm w-full md:w-1/2">
-                    <h1 className="text-3xl font-medium">{products.name}</h1>
+                    <h1 className="text-3xl font-medium">{currentProduct.name}</h1>
 
                     <div className="flex items-center gap-0.5 mt-1">
                         {Array(5).fill('').map((_, i) => (
@@ -68,23 +68,23 @@ export const ProductDetails = () => {
                     </div>
 
                     <div className="mt-6">
-                        <p className="text-gray-500/70 line-through">MRP: {currency}{products.price}</p>
-                        <p className="text-2xl font-medium">MRP: {currency}{products.offerPrice}</p>
+                        <p className="text-gray-500/70 line-through">MRP: {currency}{currentProduct.price}</p>
+                        <p className="text-2xl font-medium">MRP: {currency}{currentProduct.offerPrice}</p>
                         <span className="text-gray-500/70">(inclusive of all taxes)</span>
                     </div>
 
                     <p className="text-base font-medium mt-6">About Product</p>
                     <ul className="list-disc ml-4 text-gray-500/70">
-                        {products.description.map((desc, index) => (
+                        {currentProduct.description.map((desc, index) => (
                             <li key={index}>{desc}</li>
                         ))}
                     </ul>
 
                     <div className="flex items-center mt-10 gap-4 text-base">
-                        <button onClick={() => { addToCart(products.id) }} className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition" >
+                        <button onClick={() => { addToCart(currentProduct._id) }} className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition" >
                             Add to Cart
                         </button>
-                        <button onClick={() => { addToCart(products.id); navigate('/cart') }} className="w-full py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
+                        <button onClick={() => { addToCart(currentProduct._id); navigate('/cart') }} className="w-full py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
                             Buy now
                         </button>
                     </div>

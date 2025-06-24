@@ -111,7 +111,9 @@ export const AppContextProvider = ({ children }) => {
         let totalAmount = 0;
         for (const items in cartItems) {
             let iteminfo = product.find((product) => product._id === items)
-            totalAmount += iteminfo.offerPrice * cartItems[items];
+            if (iteminfo && iteminfo.offerPrice) {
+                totalAmount += iteminfo.offerPrice * cartItems[items];
+            }
         }
         return Math.floor(totalAmount * 100) / 100;
     }
@@ -133,7 +135,6 @@ export const AppContextProvider = ({ children }) => {
             } catch (error) {
                 toast.error(error.message)
             }
-            if (user) { updateCartItem() }
         }
         updateCart();
     }, [cartItems])

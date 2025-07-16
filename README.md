@@ -1,6 +1,7 @@
 # 🛒 BaskeTo - Grocery Delivery App
 
 BaskeTo is a modern **grocery delivery application** built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It enables users to browse products, add items to their cart, and receive seamless doorstep delivery.
+![Uploading Screenshot 2025-06-24 055159.png…]()
 
 ---
 

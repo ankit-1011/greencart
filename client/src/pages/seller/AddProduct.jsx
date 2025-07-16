@@ -84,7 +84,7 @@ const AddProduct = () => {
                     <label className="text-base font-medium" htmlFor="category">Category</label>
                     <select onChange={(e) => setCategory(e.target.value)} value={category}
                         id="category" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40">
-                        <option value="">Select Category</option>
+                        <option value="">Select Categories!</option>
                         {categories.map((item, index) =>
                             (<option key={index} value={item.path}>{item.path}</option>)
                         )}

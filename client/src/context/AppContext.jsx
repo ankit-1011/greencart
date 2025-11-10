@@ -42,11 +42,13 @@ export const AppContextProvider = ({ children }) => {
     const fetchUser = async () => {
         try {
             const { data } = await axios.post('api/user/is-auth');
+            console.log(data);
             if (data.success) {
                 setUser(data.user)
                 setCartItems(data.user.cartItems)
             }
         } catch (error) {
+            console.log(error);
             setUser(null)
         }
     }
